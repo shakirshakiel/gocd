@@ -204,8 +204,11 @@ public class ValueStreamMapService {
                 }
 
                 pipelineDependencyNode.setCanEdit(goConfigService.canEditPipeline(pipelineName, username, new HttpLocalizedOperationResult()));
-                CaseInsensitiveString templateName = goConfigService.findPipelineByName(new CaseInsensitiveString(pipelineName)).getTemplateName();
-                pipelineDependencyNode.setTemplateName(templateName != null ? templateName.toString() : null);
+                PipelineConfig pipelineConfig = goConfigService.findPipelineByName(new CaseInsensitiveString(pipelineName));
+                if (pipelineConfig != null) {
+                    CaseInsensitiveString templateName = pipelineConfig.getTemplateName();
+                    pipelineDependencyNode.setTemplateName(templateName != null ? templateName.toString() : null);
+                }
             }
         }
     }
